@@ -4,10 +4,10 @@ namespace SocialMediaForDevs.DAL.Repositories.Interfaces;
 
 public interface ITagRepository
 {
-    Task<IEnumerable<Tag>> GetTagsAsync();
-    Task<Tag> GetTagByIdAsync(int id);
-    Task<Tag> CreateTagAsync(Tag tag);
-    Task<Tag> UpdateTagAsync(Tag tag);
-    Task<Tag> DeleteTagAsync(int id);
-    Task<IEnumerable<Tag>> GetSearchTagsAsync(string search);
+    Task<List<Tag>> GetTagsAsync();
+    Task<Tag?> GetTagByIdAsync(int id);
+    Task CreateTagAsync(Tag tag);
+    Task UpdateTagAsync(int id, Tag tag);
+    Task DeleteTagAsync(int id);
+    Task<List<Tag>> GetSearchTagsAsync(string search);
 }

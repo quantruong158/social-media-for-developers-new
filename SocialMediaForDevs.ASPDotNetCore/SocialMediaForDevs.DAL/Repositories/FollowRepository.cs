@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,43 +7,63 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class FollowRepository(SocialMediaDbContext _context) : IFollowRepository
 {
-    public Task<Follow> CreateFollowAsync(Follow follow)
+    public async Task CreateFollowAsync(Follow follow)
     {
-        throw new NotImplementedException();
+        await _context.Follow.AddAsync(follow);
     }
 
-    public Task<Follow> DeleteFollowAsync(Follow follow)
+    public async Task DeleteFollowAsync(Follow follow)
     {
-        throw new NotImplementedException();
+        _context.Follow.Remove(follow);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<User>> GetFollowersByUserIdAsync(int userId)
+    public async Task<List<User>> GetFollowersByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Follow
+            .Where(follow => follow.UserId == userId)
+            .Select(follow => follow.Follower)
+            .ToListAsync();
     }
 
-    public Task<int> GetFollowersCountByUserIdAsync(int userId)
+    public async Task<int> GetFollowersCountByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Follow
+            .CountAsync(follow => follow.UserId == userId);
     }
 
-    public Task<IEnumerable<User>> GetFollowingByUserIdAsync(int userId)
+    public async Task<List<User>> GetFollowingByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Follow
+            .Where(follow => follow.FollowerId == userId)
+            .Select(follow => follow.Followee)
+            .ToListAsync();
     }
 
-    public Task<int> GetFollowingCountByUserIdAsync(int userId)
+    public async Task<int> GetFollowingCountByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Follow
+            .CountAsync(follow => follow.FollowerId == userId);
     }
 
-    public Task<IEnumerable<User>> GetUsersRecommendedToFollowAsync(int userId)
+    public async Task<List<User>> GetUsersRecommendedToFollowAsync(int userId)
     {
-        throw new NotImplementedException();
+        var user = await _context.Users
+            .Include(u => u.Followers)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        var followerIds = user!.Followers.Select(f => f.FollowerId);
+
+        var usersRecommendedToFollow = await _context.Users
+            .Where(u => u.Id != userId && !followerIds.Contains(u.Id))
+            .ToListAsync();
+
+        return usersRecommendedToFollow;
     }
 
-    public Task<bool> IsFollowingAsync(int followerId, int followingId)
+    public async Task<bool> IsFollowingAsync(int followerId, int followingId)
     {
-        throw new NotImplementedException();
+        return await _context.Follow
+            .AnyAsync(follow => follow.FollowerId == followerId && follow.UserId == followingId);
     }
 }

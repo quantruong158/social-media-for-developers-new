@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,33 +7,42 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class TagRepository(SocialMediaDbContext _context) : ITagRepository
 {
-    public Task<Tag> CreateTagAsync(Tag tag)
+    public async Task CreateTagAsync(Tag tag)
     {
-        throw new NotImplementedException();
+        await _context.Tags.AddAsync(tag);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<Tag> DeleteTagAsync(int id)
+    public async Task DeleteTagAsync(int id)
     {
-        throw new NotImplementedException();
+        await _context.Tags.Where(tag => tag.Id == id).ExecuteDeleteAsync();
     }
 
-    public Task<IEnumerable<Tag>> GetSearchTagsAsync(string search)
+    public async Task<List<Tag>> GetSearchTagsAsync(string search)
     {
-        throw new NotImplementedException();
+        return await _context.Tags.Where(tag => tag.Name.Contains(search)).ToListAsync();
     }
 
-    public Task<Tag> GetTagByIdAsync(int id)
+    public async Task<Tag?> GetTagByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var tag = await _context.Tags.FindAsync(id);
+        return tag;
     }
 
-    public Task<IEnumerable<Tag>> GetTagsAsync()
+    public async Task<List<Tag>> GetTagsAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Tags.ToListAsync();
     }
 
-    public Task<Tag> UpdateTagAsync(Tag tag)
+    public async Task UpdateTagAsync(int id, Tag tag)
     {
-        throw new NotImplementedException();
+        var existingTag = await _context.Tags.FindAsync(id);
+        if (existingTag is null)
+        {
+            return;
+        }
+        _context.Entry(existingTag).CurrentValues.SetValues(tag);
+
+        await _context.SaveChangesAsync();
     }
 }

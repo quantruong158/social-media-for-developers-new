@@ -4,10 +4,10 @@ namespace SocialMediaForDevs.DAL.Repositories.Interfaces;
 
 public interface IPostRepository
 {
-    Task<IEnumerable<Post>> GetFeedPostsByUserIdAsync(int userId);
-    Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId);
-    Task<Post> GetPostByIdAsync(int id);
-    Task<Post> CreatePostAsync(Post post);
-    Task<Post> UpdatePostAsync(Post post);
-    Task<Post> DeletePostAsync(int id);
+    Task<List<Post>> GetFeedPostsByUserIdAsync(int userId);
+    Task<List<Post>> GetPostsByUserIdAsync(int userId);
+    Task<Post?> GetPostByIdAsync(int id);
+    Task CreatePostAsync(Post post);
+    Task UpdatePostAsync(Post post);
+    Task DeletePostAsync(int id);
 }

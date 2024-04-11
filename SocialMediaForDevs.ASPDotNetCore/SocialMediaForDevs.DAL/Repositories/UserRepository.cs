@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,28 +7,36 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class UserRepository(SocialMediaDbContext _context) : IUserRepository
 {
-    public Task<User> CreateUserAsync(User user)
+    public async Task CreateUserAsync(User user)
     {
-        throw new NotImplementedException();
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<User> DeleteUserAsync(int id)
+    public async Task DeleteUserAsync(int id)
     {
-        throw new NotImplementedException();
+        await _context.Users.Where(user => user.Id == id).ExecuteDeleteAsync();
     }
 
-    public Task<User> GetUserByIdAsync(int id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FindAsync(id);
     }
 
-    public Task<IEnumerable<User>> GetUsersAsync()
+    public async Task<List<User>> GetUsersAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Users.ToListAsync();
     }
 
-    public Task<User> UpdateUserAsync(User user)
+    public async Task UpdateUserAsync(int id, User user)
     {
-        throw new NotImplementedException();
+        var existingUser = await _context.Users.FindAsync(id);
+        if (existingUser is null)
+        {
+            return;
+        }
+        _context.Entry(existingUser).CurrentValues.SetValues(user);
+
+        await _context.SaveChangesAsync();
     }
 }

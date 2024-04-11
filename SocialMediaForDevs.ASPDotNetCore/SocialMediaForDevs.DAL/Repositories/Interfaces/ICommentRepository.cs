@@ -4,9 +4,9 @@ namespace SocialMediaForDevs.DAL.Repositories.Interfaces;
 
 public interface ICommentRepository
 {
-    Task<IEnumerable<Comment>> GetCommentsByPostIdAsync(int postId);
-    Task<Comment> GetCommentByIdAsync(int id);
-    Task<Comment> CreateCommentAsync(Comment comment);
-    Task<Comment> UpdateCommentAsync(Comment comment);
-    Task<Comment> DeleteCommentAsync(int id);
+    Task<List<Comment>> GetCommentsByPostIdAsync(int postId);
+    Task<Comment?> GetCommentByIdAsync(int id);
+    Task CreateCommentAsync(Comment comment);
+    Task UpdateCommentAsync(Comment comment);
+    Task DeleteCommentAsync(int id);
 }

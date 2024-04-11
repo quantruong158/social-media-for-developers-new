@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,23 +7,28 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class LikeRepository(SocialMediaDbContext _context) : ILikeRepository
 {
-    public Task<Like> CreateLikeAsync(Like like)
+    public async Task CreateLikeAsync(Like like)
     {
-        throw new NotImplementedException();
+        await _context.Like.AddAsync(like);
     }
 
-    public Task<Like> DeleteLikeAsync(Like like)
+    public async Task DeleteLikeAsync(Like like)
     {
-        throw new NotImplementedException();
+        _context.Like.Remove(like);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<int> GetLikesCountByPostIdAsync(int postId)
+    public async Task<int> GetLikesCountByPostIdAsync(int postId)
     {
-        throw new NotImplementedException();
+        return await _context.Like
+            .CountAsync(like => like.PostId == postId);
     }
 
-    public Task<IEnumerable<User>> GetUsersWhoLikedPostAsync(int postId)
+    public async Task<List<User>> GetUsersWhoLikedPostAsync(int postId)
     {
-        throw new NotImplementedException();
+        return await _context.Like
+            .Where(like => like.PostId == postId)
+            .Select(like => like.User)
+            .ToListAsync();
     }
 }

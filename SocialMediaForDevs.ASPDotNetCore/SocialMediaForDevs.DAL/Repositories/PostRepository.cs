@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,33 +7,51 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class PostRepository(SocialMediaDbContext _context) : IPostRepository
 {
-    public Task<Post> CreatePostAsync(Post post)
+    public async Task CreatePostAsync(Post post)
     {
-        throw new NotImplementedException();
+        await _context.Posts.AddAsync(post);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<Post> DeletePostAsync(int id)
+    public async Task DeletePostAsync(int id)
     {
-        throw new NotImplementedException();
+        await _context.Posts.Where(post => post.Id == id).ExecuteDeleteAsync();
     }
 
-    public Task<IEnumerable<Post>> GetFeedPostsByUserIdAsync(int userId)
+    public async Task<List<Post>> GetFeedPostsByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        var user = await _context.Users
+            .Include(u => u.Followers)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        var followerIds = user!.Followers.Select(f => f.FollowerId);
+
+        var posts = await _context.Posts
+            .Where(p => followerIds.Contains(p.UserId))
+            .ToListAsync();
+
+        return posts;
     }
 
-    public Task<Post> GetPostByIdAsync(int id)
+    public async Task<Post?> GetPostByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Posts.FindAsync(id);
     }
 
-    public Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId)
+    public async Task<List<Post>> GetPostsByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _context.Posts.Where(post => post.UserId == userId).ToListAsync();
     }
 
-    public Task<Post> UpdatePostAsync(Post post)
+    public async Task UpdatePostAsync(Post post)
     {
-        throw new NotImplementedException();
+        var existingPost = await _context.Posts.FindAsync(post.Id);
+        if (existingPost is null)
+        {
+            return;
+        }
+        _context.Entry(existingPost).CurrentValues.SetValues(post);
+
+        await _context.SaveChangesAsync();
     }
 }

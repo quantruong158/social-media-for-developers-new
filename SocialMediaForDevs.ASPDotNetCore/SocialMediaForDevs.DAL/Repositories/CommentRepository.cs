@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.DatabaseContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialMediaForDevs.DAL.DatabaseContext;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 
@@ -6,28 +7,36 @@ namespace SocialMediaForDevs.DAL.Repositories;
 
 public class CommentRepository(SocialMediaDbContext _context) : ICommentRepository
 {
-    public Task<Comment> CreateCommentAsync(Comment comment)
+    public async Task CreateCommentAsync(Comment comment)
     {
-        throw new NotImplementedException();
+        await _context.Comments.AddAsync(comment);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<Comment> DeleteCommentAsync(int id)
+    public async Task DeleteCommentAsync(int id)
     {
-        throw new NotImplementedException();
+        await _context.Comments.Where(comment => comment.Id == id).ExecuteDeleteAsync();
     }
 
-    public Task<Comment> GetCommentByIdAsync(int id)
+    public async Task<Comment?> GetCommentByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Comments.FindAsync(id);
     }
 
-    public Task<IEnumerable<Comment>> GetCommentsByPostIdAsync(int postId)
+    public async Task<List<Comment>> GetCommentsByPostIdAsync(int postId)
     {
-        throw new NotImplementedException();
+        return await _context.Comments.Where(comment => comment.PostId == postId).ToListAsync();
     }
 
-    public Task<Comment> UpdateCommentAsync(Comment comment)
+    public async Task UpdateCommentAsync(Comment comment)
     {
-        throw new NotImplementedException();
+        var existingComment = await _context.Comments.FindAsync(comment.Id);
+        if (existingComment is null)
+        {
+            return;
+        }
+        _context.Entry(existingComment).CurrentValues.SetValues(comment);
+
+        await _context.SaveChangesAsync();
     }
 }
