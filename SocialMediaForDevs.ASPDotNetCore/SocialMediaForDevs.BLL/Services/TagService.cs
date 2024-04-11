@@ -1,32 +1,35 @@
 ﻿using SocialMediaForDevs.BLL.Services.Interfaces;
+using SocialMediaForDevs.DAL.Repositories.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
+using System.Linq;
 
 namespace SocialMediaForDevs.BLL.Services;
 
-public class TagService : ITagService
+public class TagService(ITagRepository _tagRepository) : ITagService
 {
-    public Task CreateTagAsync(CreateTagRequest createTagRequest)
+    public async Task CreateTagAsync(CreateTagRequest createTagRequest)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteTagAsync(int tagId)
+    public async Task DeleteTagAsync(int tagId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<TagResponse>> GetSearchTagsAsync(string search)
+    public async Task<IEnumerable<TagResponse>> GetSearchTagsAsync(string search)
     {
         throw new NotImplementedException();
     }
 
-    public Task<TagResponse> GetTagByIdAsync(int tagId)
+    public async Task<TagResponse?> GetTagByIdAsync(int tagId)
     {
-        throw new NotImplementedException();
+        var tag = await _tagRepository.GetTagByIdAsync(tagId);
+        return new TagResponse(tag.Id, tag.Name);
     }
 
-    public Task<IEnumerable<TagResponse>> GetTagsAsync()
+    public async Task<IEnumerable<TagResponse>> GetTagsAsync()
     {
-        throw new NotImplementedException();
+        return (await _tagRepository.GetTagsAsync()).Select(tag => new TagResponse(tag.Id, tag.Name));
     }
 }

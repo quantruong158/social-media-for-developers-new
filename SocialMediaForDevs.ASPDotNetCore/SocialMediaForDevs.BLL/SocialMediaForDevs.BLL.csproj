@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SocialMediaForDevs.DTO\SocialMediaForDevs.DTO.csproj" />
+    <ProjectReference Include="..\SocialMediaForDevs.DAL\SocialMediaForDevs.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
