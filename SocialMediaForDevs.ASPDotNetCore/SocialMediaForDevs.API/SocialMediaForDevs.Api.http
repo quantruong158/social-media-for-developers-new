@@ -1,6 +1,8 @@
 @HostAddress = http://localhost:5000
 
-GET {{HostAddress}}/api/
+GET {{HostAddress}}/api/tags
 Accept: application/json
 
 ###
+GET {{HostAddress}}/api/tags/4
+Accept: application/json

@@ -1,4 +1,5 @@
 using SocialMediaForDevs.DAL;
+using SocialMediaForDevs.BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddBLL();
 builder.Services.AddDAL(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
