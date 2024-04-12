@@ -1,47 +1,74 @@
-﻿using SocialMediaForDevs.DAL.Repositories.Interfaces;
+﻿using SocialMediaForDevs.DAL.Entities;
+using SocialMediaForDevs.DAL.Repositories.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
 
 namespace SocialMediaForDevs.BLL.Services.Interfaces;
 
 public class FollowService(IFollowRepository _repo) : IFollowService
 {
-    public async Task FollowUserAsync(int followerId, int followingId)
+    public async Task FollowUserAsync(CreateFollowRequest createFollowRequest)
     {
-        throw new NotImplementedException();
+        var newFollow = new Follow {
+            UserId = createFollowRequest.FolloweeId,
+            FollowerId = createFollowRequest.FollowerId
+        };
+        await _repo.CreateFollowAsync(newFollow);
     }
 
     public async Task<IEnumerable<UserResponse>> GetFollowersByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        var followers = await _repo.GetFollowersByUserIdAsync(userId);
+        return followers.Select(f => new UserResponse
+        (f.Id,
+         f.Username,
+         f.Email,
+         f.ImgUrl
+        ));
     }
 
     public async Task<int> GetFollowersCountByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _repo.GetFollowersCountByUserIdAsync(userId);
     }
 
     public async Task<IEnumerable<UserResponse>> GetFollowingByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        var following = await _repo.GetFollowingByUserIdAsync(userId);
+        return following.Select(f => new UserResponse
+        (f.Id,
+         f.Username,
+         f.Email,
+         f.ImgUrl
+        ));
     }
 
     public async Task<int> GetFollowingCountByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _repo.GetFollowingCountByUserIdAsync(userId);
     }
 
     public async Task<IEnumerable<UserResponse>> GetSuggestedFolloweeAsync(int userId)
     {
-        throw new NotImplementedException();
+        var suggestedFollowees = await _repo.GetUsersRecommendedToFollowAsync(userId);
+        return suggestedFollowees.Select(f => new UserResponse
+        (f.Id,
+         f.Username,
+         f.Email,
+         f.ImgUrl
+        ));
     }
 
     public async Task<bool> IsFollowingAsync(int followerId, int followingId)
     {
-        throw new NotImplementedException();
+        return await _repo.IsFollowingAsync(followerId, followingId);
     }
 
     public async Task UnfollowUserAsync(int followerId, int followingId)
     {
-        throw new NotImplementedException();
+        var followToDelete = new Follow {
+            UserId = followingId,
+            FollowerId = followerId
+        };
+        await _repo.DeleteFollowAsync(followToDelete);
     }
 }

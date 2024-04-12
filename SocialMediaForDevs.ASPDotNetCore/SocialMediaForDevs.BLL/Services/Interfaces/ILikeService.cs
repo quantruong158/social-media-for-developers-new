@@ -5,6 +5,6 @@ namespace SocialMediaForDevs.BLL.Services.Interfaces;
 public interface ILikeService
 {
     Task<IEnumerable<UserResponse>> GetUsersWhoLikedPostAsync(int postId);
-    Task LikePostAsync(int userId, int postId);
+    Task LikePostAsync(CreateLikeRequest createLikeRequest);
     Task UnlikePostAsync(int userId, int postId);
 }

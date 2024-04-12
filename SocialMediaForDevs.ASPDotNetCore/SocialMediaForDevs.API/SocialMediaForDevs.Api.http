@@ -6,3 +6,79 @@ Accept: application/json
 ###
 GET {{HostAddress}}/api/tags/4
 Accept: application/json
+
+###
+GET {{HostAddress}}/api/comments?postId=2
+Accept: application/json
+
+###
+GET {{HostAddress}}/api/comments/1
+Accept: application/json
+
+###
+POST {{HostAddress}}/api/comments
+Content-Type: application/json
+
+{
+    "content": "This is a comment 1",
+    "userId": 1,
+    "postId": 1,
+    "imgUrl": "",
+    "codeSnippet": "function(){}"
+}
+
+###
+GET {{HostAddress}}/api/posts?userId=2
+Accept: application/json
+
+###
+GET {{HostAddress}}/api/posts/3
+Accept: application/json
+
+###
+POST {{HostAddress}}/api/posts
+Content-Type: application/json
+
+{
+    "Content": "Test post to appear on feed",
+    "UserId": 2,
+    "ImgUrl": "",
+    "CodeSnippet": "",
+    "TagIds": [4,5]
+}
+###
+POST {{HostAddress}}/api/posts/likes
+Content-Type: application/json
+
+{
+    "PostId": 2,
+    "UserId": 1
+}
+###
+POST {{HostAddress}}/api/posts/unlikes
+Content-Type: application/json
+
+{
+    "PostId": 2,
+    "UserId": 1
+}
+###
+POST {{HostAddress}}/api/follows
+Content-Type: application/json
+
+{
+    "FollowerId": 1,
+    "FolloweeId": 2
+}
+###
+POST {{HostAddress}}/api/posts/unlikes
+Content-Type: application/json
+
+{
+    "PostId": 2,
+    "UserId": 1
+}
+
+###
+GET {{HostAddress}}/api/feeds?userId=1
+Accept: application/json

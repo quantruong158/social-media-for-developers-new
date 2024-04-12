@@ -8,7 +8,7 @@ public interface IFollowService
     Task<IEnumerable<UserResponse>> GetFollowingByUserIdAsync(int userId);
     Task<int> GetFollowersCountByUserIdAsync(int userId);
     Task<int> GetFollowingCountByUserIdAsync(int userId);
-    Task FollowUserAsync(int followerId, int followingId);
+    Task FollowUserAsync(CreateFollowRequest createFollowRequest);
     Task UnfollowUserAsync(int followerId, int followingId);
     Task<bool> IsFollowingAsync(int followerId, int followingId);
     Task<IEnumerable<UserResponse>> GetSuggestedFolloweeAsync(int userId);

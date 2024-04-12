@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialMediaForDevs.BLL.Services.Interfaces;
+using SocialMediaForDevs.DTO.Dtos;
 
-namespace SocialMediaForDevs.API;
+namespace SocialMediaForDevs.API.Controllers;
 
 [ApiController]
 [Route("api/tags")]
@@ -19,5 +20,12 @@ public class TagController(ITagService _tagService) : ControllerBase
     {
         var tag = await _tagService.GetTagByIdAsync(tagId);
         return Ok(tag);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateTag([FromBody] CreateTagRequest createTagRequest)
+    {
+        await _tagService.CreateTagAsync(createTagRequest);
+        return Ok();
     }
 }

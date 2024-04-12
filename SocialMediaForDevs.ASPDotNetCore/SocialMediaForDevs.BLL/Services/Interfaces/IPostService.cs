@@ -8,6 +8,6 @@ public interface IPostService
     Task<IEnumerable<PostResponse>> GetPostsByUserIdAsync(int userId);
     Task<PostResponse?> GetPostByIdAsync(int postId);
     Task CreatePostAsync(CreatePostRequest createPostRequest);
-    Task UpdatePostAsync(UpdatePostRequest updatePostRequest);
+    Task UpdatePostAsync(int id, UpdatePostRequest updatePostRequest);
     Task DeletePostAsync(int postId);
 }
