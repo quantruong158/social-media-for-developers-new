@@ -60,7 +60,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.Follow", b =>
@@ -75,7 +75,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasIndex("FollowerId");
 
-                    b.ToTable("Follow");
+                    b.ToTable("Follow", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.Like", b =>
@@ -90,7 +90,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Like");
+                    b.ToTable("Like", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.Post", b =>
@@ -126,7 +126,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.PostTag", b =>
@@ -141,7 +141,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("PostTag");
+                    b.ToTable("PostTag", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.Tag", b =>
@@ -158,7 +158,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
 
                     b.HasData(
                         new
@@ -220,7 +220,7 @@ namespace SocialMediaForDevs.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("SocialMediaForDevs.DAL.Entities.Comment", b =>

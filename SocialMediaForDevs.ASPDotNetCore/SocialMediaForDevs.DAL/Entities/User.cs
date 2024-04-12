@@ -7,8 +7,8 @@ public class User
     public required string Email { get; set; }
     public required string Password { get; set; }
     public string ImgUrl { get; set; } = default!;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime UpdatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public List<Post> Posts { get; set; } = [];
     public List<Comment> Comments { get; set; } = [];
     public List<Like> Likes { get; set; } = [];

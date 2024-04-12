@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlTypes;
 
 namespace SocialMediaForDevs.DAL.Entities;
 
@@ -10,8 +11,10 @@ public class Comment
     public string ImgUrl { get; set; } = default!;
     [Column(TypeName = "text")]
     public string CodeSnippet { get; set; } = default!;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public DateTime UpdatedAt { get; set; }
+    [Column(TypeName = "timestamp with time zone")]
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [Column(TypeName = "timestamp with time zone")]
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public int UserId { get; set; }
     public User User { get; set; } = default!;
     public int PostId { get; set; }
