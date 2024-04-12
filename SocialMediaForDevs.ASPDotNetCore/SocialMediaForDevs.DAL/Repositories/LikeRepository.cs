@@ -10,6 +10,7 @@ public class LikeRepository(SocialMediaDbContext _context) : ILikeRepository
     public async Task CreateLikeAsync(Like like)
     {
         await _context.Like.AddAsync(like);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteLikeAsync(Like like)

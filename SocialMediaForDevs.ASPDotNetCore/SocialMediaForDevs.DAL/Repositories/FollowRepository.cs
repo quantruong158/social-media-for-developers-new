@@ -10,6 +10,7 @@ public class FollowRepository(SocialMediaDbContext _context) : IFollowRepository
     public async Task CreateFollowAsync(Follow follow)
     {
         await _context.Follow.AddAsync(follow);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteFollowAsync(Follow follow)

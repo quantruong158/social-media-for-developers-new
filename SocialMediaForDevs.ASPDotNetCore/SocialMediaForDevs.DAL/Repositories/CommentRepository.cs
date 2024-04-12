@@ -20,12 +20,14 @@ public class CommentRepository(SocialMediaDbContext _context) : ICommentReposito
 
     public async Task<Comment?> GetCommentByIdAsync(int id)
     {
-        return await _context.Comments.FindAsync(id);
+        return await _context.Comments
+        .Include(c => c.User)
+        .FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<List<Comment>> GetCommentsByPostIdAsync(int postId)
     {
-        return await _context.Comments.Where(comment => comment.PostId == postId).ToListAsync();
+        return await _context.Comments.Where(comment => comment.PostId == postId).Include(c => c.User).ToListAsync();
     }
 
     public async Task UpdateCommentAsync(Comment comment)

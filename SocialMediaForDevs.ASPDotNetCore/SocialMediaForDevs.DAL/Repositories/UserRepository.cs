@@ -28,9 +28,9 @@ public class UserRepository(SocialMediaDbContext _context) : IUserRepository
         return await _context.Users.ToListAsync();
     }
 
-    public async Task UpdateUserAsync(int id, User user)
+    public async Task UpdateUserAsync(User user)
     {
-        var existingUser = await _context.Users.FindAsync(id);
+        var existingUser = await _context.Users.FindAsync(user.Id);
         if (existingUser is null)
         {
             return;

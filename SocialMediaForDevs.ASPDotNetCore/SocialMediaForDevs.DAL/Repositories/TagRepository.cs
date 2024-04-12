@@ -34,9 +34,9 @@ public class TagRepository(SocialMediaDbContext _context) : ITagRepository
         return await _context.Tags.ToListAsync();
     }
 
-    public async Task UpdateTagAsync(int id, Tag tag)
+    public async Task UpdateTagAsync(Tag tag)
     {
-        var existingTag = await _context.Tags.FindAsync(id);
+        var existingTag = await _context.Tags.FindAsync(tag.Id);
         if (existingTag is null)
         {
             return;
