@@ -1,4 +1,5 @@
 ﻿using SocialMediaForDevs.BLL.Services.Interfaces;
+using SocialMediaForDevs.BLL.Services.Mapping;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
@@ -9,22 +10,12 @@ public class LikeService(ILikeRepository _repo) : ILikeService
 {
     public async Task<IEnumerable<UserResponse>> GetUsersWhoLikedPostAsync(int postId)
     {
-        return (await _repo.GetUsersWhoLikedPostAsync(postId)).Select(u => new UserResponse(
-            u.Id,
-            u.Username,
-            u.Email,
-            u.ImgUrl
-        ));
+        return (await _repo.GetUsersWhoLikedPostAsync(postId)).Select(u => u.ToUserResponse());
     }
 
     public async Task LikePostAsync(CreateLikeRequest createLikeRequest)
     {
-        var like = new Like
-        {
-            UserId = createLikeRequest.UserId,
-            PostId = createLikeRequest.PostId
-        };
-        await _repo.CreateLikeAsync(like);
+        await _repo.CreateLikeAsync(createLikeRequest.ToEntity());
     }
 
     public async Task UnlikePostAsync(int userId, int postId)

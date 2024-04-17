@@ -1,4 +1,5 @@
 ﻿using SocialMediaForDevs.BLL.Services.Interfaces;
+using SocialMediaForDevs.BLL.Services.Mapping;
 using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
@@ -10,11 +11,7 @@ public class TagService(ITagRepository _tagRepository) : ITagService
 {
     public async Task CreateTagAsync(CreateTagRequest createTagRequest)
     {
-        var tag = new Tag
-        {
-            Name = createTagRequest.Name
-        };
-        await _tagRepository.CreateTagAsync(tag);
+        await _tagRepository.CreateTagAsync(createTagRequest.ToEntity());
     }
 
     public async Task DeleteTagAsync(int tagId)
@@ -24,7 +21,7 @@ public class TagService(ITagRepository _tagRepository) : ITagService
 
     public async Task<IEnumerable<TagResponse>> GetSearchTagsAsync(string search)
     {
-        return (await _tagRepository.GetSearchTagsAsync(search)).Select(tag => new TagResponse(tag.Id, tag.Name));
+        return (await _tagRepository.GetSearchTagsAsync(search)).Select(tag => tag.ToTagResponse());
     }
 
     public async Task<TagResponse?> GetTagByIdAsync(int tagId)
@@ -34,11 +31,11 @@ public class TagService(ITagRepository _tagRepository) : ITagService
         {
             return null;
         }
-        return new TagResponse(tag.Id, tag.Name);
+        return tag.ToTagResponse();
     }
 
     public async Task<IEnumerable<TagResponse>> GetTagsAsync()
     {
-        return (await _tagRepository.GetTagsAsync()).Select(tag => new TagResponse(tag.Id, tag.Name));
+        return (await _tagRepository.GetTagsAsync()).Select(tag => tag.ToTagResponse());
     }
 }

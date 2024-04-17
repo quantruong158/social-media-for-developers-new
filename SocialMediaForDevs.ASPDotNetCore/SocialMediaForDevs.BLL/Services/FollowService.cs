@@ -1,4 +1,5 @@
-﻿using SocialMediaForDevs.DAL.Entities;
+﻿using SocialMediaForDevs.BLL.Services.Mapping;
+using SocialMediaForDevs.DAL.Entities;
 using SocialMediaForDevs.DAL.Repositories.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
 
@@ -8,22 +9,13 @@ public class FollowService(IFollowRepository _repo) : IFollowService
 {
     public async Task FollowUserAsync(CreateFollowRequest createFollowRequest)
     {
-        var newFollow = new Follow {
-            UserId = createFollowRequest.FolloweeId,
-            FollowerId = createFollowRequest.FollowerId
-        };
-        await _repo.CreateFollowAsync(newFollow);
+        await _repo.CreateFollowAsync(createFollowRequest.ToEntity());
     }
 
     public async Task<IEnumerable<UserResponse>> GetFollowersByUserIdAsync(int userId)
     {
         var followers = await _repo.GetFollowersByUserIdAsync(userId);
-        return followers.Select(f => new UserResponse
-        (f.Id,
-         f.Username,
-         f.Email,
-         f.ImgUrl
-        ));
+        return followers.Select(f => f.ToUserResponse());
     }
 
     public async Task<int> GetFollowersCountByUserIdAsync(int userId)
@@ -34,12 +26,7 @@ public class FollowService(IFollowRepository _repo) : IFollowService
     public async Task<IEnumerable<UserResponse>> GetFollowingByUserIdAsync(int userId)
     {
         var following = await _repo.GetFollowingByUserIdAsync(userId);
-        return following.Select(f => new UserResponse
-        (f.Id,
-         f.Username,
-         f.Email,
-         f.ImgUrl
-        ));
+        return following.Select(f => f.ToUserResponse());
     }
 
     public async Task<int> GetFollowingCountByUserIdAsync(int userId)
@@ -50,12 +37,7 @@ public class FollowService(IFollowRepository _repo) : IFollowService
     public async Task<IEnumerable<UserResponse>> GetSuggestedFolloweeAsync(int userId)
     {
         var suggestedFollowees = await _repo.GetUsersRecommendedToFollowAsync(userId);
-        return suggestedFollowees.Select(f => new UserResponse
-        (f.Id,
-         f.Username,
-         f.Email,
-         f.ImgUrl
-        ));
+        return suggestedFollowees.Select(f => f.ToUserResponse());
     }
 
     public async Task<bool> IsFollowingAsync(int followerId, int followingId)
