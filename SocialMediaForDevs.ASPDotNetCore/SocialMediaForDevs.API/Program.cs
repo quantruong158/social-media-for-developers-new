@@ -1,10 +1,25 @@
 using SocialMediaForDevs.DAL;
 using SocialMediaForDevs.BLL;
+using SocialMediaForDevs.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using SocialMediaForDevs.DAL.DatabaseContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.User.RequireUniqueEmail = true;
+})
+    .AddEntityFrameworkStores<SocialMediaDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
 

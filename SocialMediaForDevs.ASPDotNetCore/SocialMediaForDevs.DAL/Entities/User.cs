@@ -4,9 +4,6 @@ namespace SocialMediaForDevs.DAL.Entities;
 
 public class User : IdentityUser<int>
 {
-    public required new string UserName { get; set; }
-    public required new string Email { get; set; }
-    public required string Password { get; set; }
     public string? ImgUrl { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

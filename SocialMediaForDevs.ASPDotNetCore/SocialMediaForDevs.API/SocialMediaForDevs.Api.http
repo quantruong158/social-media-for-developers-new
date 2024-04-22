@@ -82,3 +82,14 @@ Content-Type: application/json
 ###
 GET {{HostAddress}}/api/feeds?userId=1
 Accept: application/json
+
+
+###
+POST {{HostAddress}}/api/account/register
+Content-Type: application/json
+
+{
+    "UserName": "testuser2",
+    "Email": "testuser",
+    "Password": "Testuser1#"
+}

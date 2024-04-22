@@ -14,6 +14,7 @@ namespace SocialMediaForDevs.BLL
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IFollowService, FollowService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }
