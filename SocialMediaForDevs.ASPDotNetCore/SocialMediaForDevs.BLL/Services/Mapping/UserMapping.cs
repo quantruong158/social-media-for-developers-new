@@ -9,8 +9,8 @@ public static class UserMapping
     {
         return new UserResponse(
             user.Id,
-            user.UserName,
-            user.Email,
+            user.UserName!,
+            user.Email!,
             user.ImgUrl
         );
     }
