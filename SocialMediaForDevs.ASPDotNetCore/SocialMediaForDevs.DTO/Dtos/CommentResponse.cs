@@ -2,12 +2,12 @@
 
 public record CommentResponse(
     int Id,
-    string Content,
+    string? Content,
     string Username,
-    string UserImgUrl,
+    string? UserImgUrl,
     string Email,
     DateTime CreatedAt,
     DateTime UpdatedAt,
-    string ImgUrl,
-    string CodeSnippet
+    string? ImgUrl,
+    string? CodeSnippet
 );

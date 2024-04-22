@@ -33,7 +33,7 @@ public static class PostMapping
             post.Content,
             post.ImgUrl,
             post.CodeSnippet,
-            post.User.Username,
+            post.User.UserName,
             post.User.ImgUrl,
             post.User.Email,
             post.Likes.Any(l => l.UserId == userId),

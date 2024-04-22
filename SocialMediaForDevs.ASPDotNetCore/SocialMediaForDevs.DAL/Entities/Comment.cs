@@ -7,10 +7,10 @@ public class Comment
 {
     public int Id { get; set; }
     [Column(TypeName = "text")]
-    public string Content { get; set; } = default!;
-    public string ImgUrl { get; set; } = default!;
+    public string? Content { get; set; }
+    public string? ImgUrl { get; set; }
     [Column(TypeName = "text")]
-    public string CodeSnippet { get; set; } = default!;
+    public string? CodeSnippet { get; set; }
     [Column(TypeName = "timestamp with time zone")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     [Column(TypeName = "timestamp with time zone")]

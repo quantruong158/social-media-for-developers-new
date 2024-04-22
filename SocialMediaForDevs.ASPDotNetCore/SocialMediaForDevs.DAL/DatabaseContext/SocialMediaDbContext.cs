@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaForDevs.DAL.Entities;
 
 namespace SocialMediaForDevs.DAL.DatabaseContext;
-public class SocialMediaDbContext(DbContextOptions<SocialMediaDbContext> options) : DbContext(options)
+public class SocialMediaDbContext(DbContextOptions<SocialMediaDbContext> options) : IdentityDbContext<User, IdentityRole<int>, int>(options)
 {
-    public DbSet<User> Users { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Tag> Tags { get; set; }

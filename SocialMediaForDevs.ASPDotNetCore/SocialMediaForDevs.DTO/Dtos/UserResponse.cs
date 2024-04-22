@@ -4,5 +4,5 @@ public record class UserResponse(
     int Id,
     string Username,
     string Email,
-    string ImgUrl
+    string? ImgUrl
 );

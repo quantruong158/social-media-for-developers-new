@@ -20,7 +20,7 @@ public static class CommentMapping
         return new CommentResponse(
             comment.Id,
             comment.Content,
-            comment.User.Username,
+            comment.User.UserName,
             comment.User.ImgUrl,
             comment.User.Email,
             comment.CreatedAt,

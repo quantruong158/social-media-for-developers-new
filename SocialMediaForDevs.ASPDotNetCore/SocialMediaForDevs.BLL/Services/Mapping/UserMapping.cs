@@ -9,7 +9,7 @@ public static class UserMapping
     {
         return new UserResponse(
             user.Id,
-            user.Username,
+            user.UserName,
             user.Email,
             user.ImgUrl
         );
