@@ -89,8 +89,8 @@ POST {{HostAddress}}/api/account/register
 Content-Type: application/json
 
 {
-    "UserName": "testuser2",
-    "Email": "testuser",
+    "UserName": "testuser",
+    "Email": "testuser@gmail.com",
     "Password": "Testuser1#"
 }
 
@@ -101,4 +101,13 @@ Content-Type: application/json
 {
     "Email": "testuser@gmail.com",
     "Password": "Testuser1#"
+}
+
+###
+POST {{HostAddress}}/api/account/refresh
+Content-Type: application/json
+
+{
+    "jwtToken": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0dXNlckBnbWFpbC5jb20iLCJleHAiOjE3MTM4NDM4MjksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMCJ9.Cv3rGQDZ_E7RsO5zFA46jqG-MbxU8HhtoWc2l8DPGMU",
+    "refreshToken": "K+nrDkY29CHAcw3vr5/x4Cxye5h7VdIjJdtIViOGJ4KxXoVdkou2ZYwKB08Ut1ZVRkWr4WR8z/Gd0+ZyuM8PyQ=="
 }

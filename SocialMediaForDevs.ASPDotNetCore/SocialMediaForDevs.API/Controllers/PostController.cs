@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SocialMediaForDevs.BLL.Services.Interfaces;
 using SocialMediaForDevs.DTO.Dtos;
 
@@ -6,6 +7,7 @@ namespace SocialMediaForDevs.API.Controllers;
 
 [ApiController]
 [Route("api/posts")]
+[Authorize]
 public class PostController(IPostService _postService) : ControllerBase
 {
     [HttpGet]

@@ -26,11 +26,20 @@ public class AuthController(IAuthService _authService) : ControllerBase
         {
             return BadRequest();
         }
-        bool result = await _authService.LoginAsync(loginRequest);
-        if (result)
+        var res = await _authService.LoginAsync(loginRequest);
+        if (res.IsLoggedIn)
         {
-            var tokenString = _authService.GenerateJwtTokenAsync(loginRequest);
-            return Ok(tokenString);
+            return Ok(res);
+        }
+        return Unauthorized();
+    }
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh([FromBody] RefreshRequest refreshRequest)
+    {
+        var res = await _authService.RefreshAsync(refreshRequest);
+        if (res.IsLoggedIn)
+        {
+            return Ok(res);
         }
         return Unauthorized();
     }

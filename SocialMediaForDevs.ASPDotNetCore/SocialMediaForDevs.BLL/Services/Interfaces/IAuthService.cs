@@ -8,6 +8,7 @@ namespace SocialMediaForDevs.BLL.Services.Interfaces;
 public interface IAuthService
 {
     Task<IdentityResult> RegisterAsync(RegisterRequest registerRequest);
-    Task<bool> LoginAsync(LoginRequest loginRequest);
-    string GenerateJwtTokenAsync(LoginRequest user);
+    Task<LoginResponse> LoginAsync(LoginRequest loginRequest);
+    string GenerateJwtTokenAsync(string email);
+    Task<LoginResponse> RefreshAsync(RefreshRequest refreshRequest);
 }
